@@ -1,0 +1,23 @@
+<div class="container">
+    <h1>Značky</h1>
+    <div class="row">
+        <div class="card col-3">
+            <div class="card-body">
+                <%= link_to  octicon("plus", {class:"btn-link"})+" Nová značka", new_settings_tag_path, class: "card-link" %>
+            </div>
+        </div>
+    <% @tags.each do |tag| %>
+        <div class="card col-3">
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between">
+                    <h5><%= octicon "tag" %> <%= tag.title %></h5>
+                    <small class="text-mute"><%= "" %> označených</small>
+                </div>
+                <%= link_to  "Detail", tag, class: "card-link" %>
+                <%= link_to  "Upravit", tag, action: edit, class: "card-link" %>
+                <%= link_to  "Odstranit", tag, method: :delete, class: "card-link" %>
+            </div>
+        </div>
+    <% end %>
+    </div>
+</div>

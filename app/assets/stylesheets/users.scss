@@ -1,0 +1,11 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.input-group-prepend {
+    width: 42%;
+    .input-group-text {
+        width: 100%;
+        display: inline-block;
+        text-align: right;
+    }
+}

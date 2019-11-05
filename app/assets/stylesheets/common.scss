@@ -1,0 +1,19 @@
+.column-align {
+    display: flex;
+    flex-flow: column;
+    padding: 2rem 1rem;
+}
+.row-align {
+    display: flex;
+    flex-flow: row;
+    * {
+        flex: auto;
+    }
+}
+.point-block {
+    text-align: center;
+    border-radius: 0.3rem;
+    background-color: var(--light);
+    padding: 8px;
+    margin: 12px;
+}

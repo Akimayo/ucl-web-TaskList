@@ -1,0 +1,44 @@
+<header class="home-tagline-header">
+    <div class="home-light-theme">
+        <h1>Úkoly pod kontrolou</h1>
+        <h2>s aplikací TaskList</h2>
+    </div>
+    <% if user_signed_in? %>
+        <div class="d-flex justify-content-around">
+            <%= link_to  "Nastavení", settings_path, class: "btn btn-link" %>
+            <%= link_to  "Moje úkoly", tasks_path, class: "btn btn-primary" %>
+            <%= link_to  "Odhlásit se", destroy_user_session_path, method: :delete, class: "btn btn-link" %>
+        </div>
+    <% else %>
+        <div class="column-align">
+            <%= link_to  "Přihlásit se", new_user_session_path, class: "btn btn-primary" %>
+            <%= link_to  "Ještě nemáte účet?", new_user_registration_path %>
+    <% end %>
+    </div>
+    <div class="home-dark-theme">
+        <p>Aplikace TaskList umožňuje jednoduchou správu úkolů z prostředí webového prohlížeče.</p>
+        <p>Klíčové vlastnosti:</p>
+        <div class="row-align">
+            <div class="point-block">
+                <%= octicon 'saved', "aria-label" => "Kategorie" %>
+                Kategorie
+            </div>
+            <div class="point-block">
+                <%= octicon 'tag', "aria-label" => "Značky" %>
+                Značky
+            </div>
+            <div class="point-block" id="rainbow-bitch">
+                <!-- https://ih1.redbubble.net/image.428495307.9315/poster,840x830,f8f8f8-pad,750x1000,f8f8f8.jpg -->
+                <!-- <%= octicon 'paintcan', "aria-label" => "Barvičky" %>  -->
+                <span>B</span>
+                <span>a</span>
+                <span>r</span>
+                <span>v</span>
+                <span>i</span>
+                <span>č</span>
+                <span>k</span>
+                <span>y</span>
+            </div>
+        </div>
+    </div>
+</header>

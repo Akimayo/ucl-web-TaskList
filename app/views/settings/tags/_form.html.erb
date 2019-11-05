@@ -1,0 +1,13 @@
+<% simple_form_for @tag, url: settings_tags_path do |t| %>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Značka</span>
+        </div>
+        <%= t.input_field :title,
+                    required: true,
+                    autofocus: true,
+                    placeholedr: "např. 'Práce'",
+                    class: "form-control" %>
+    </div>
+    <%= t.button :submit, "Uložit", class: "btn btn-primary" %>
+<% end %>

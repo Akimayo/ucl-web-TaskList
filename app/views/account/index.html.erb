@@ -1,0 +1,31 @@
+<h1><%= current_user.username %></h1>
+<div class="container">
+    <div class="row">
+        <%= render "account/nav" %>
+        <div class="col-9">
+            <%= link_to 'Odhlásit se', destroy_user_session_path, method: :delete %>
+            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#cancel-modal">
+                Odstranit účet
+            </button>
+        </div>
+    </div>
+</div>
+<div class="modal fade" role="dialog" id="cancel-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Odstranit účet</h5>
+                <button class="close" role="button" data-dismiss="modal" aria-label="Zavřít">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Odstranění účtu nenávratně odstraní všechny úkoly, značky a kategorie a znemožní přístup k tomuto účtu. Opravdu si přejete účet odstranit?
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button class="btn btn-primary" type="button" data-dismiss="modal">Ne, neodstraňovat</button>
+                <%= link_to  "Ano, odstranit účet", user_registration_path, class: "btn btn-secondary",  method: :delete %>
+            </div>
+        </div>
+    </div>
+</div>

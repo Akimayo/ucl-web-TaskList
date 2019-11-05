@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  deadline_at: 2019-11-01 08:43:15
+  title: MyString
+  note: MyText
+  is_done: false
+  user: 
+  category: 
+
+two:
+  deadline_at: 2019-11-01 08:43:15
+  title: MyString
+  note: MyText
+  is_done: false
+  user: 
+  category: 

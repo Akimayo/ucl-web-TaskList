@@ -1,0 +1,51 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.home-tagline-header {
+    padding: 4rem 12vw;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    text-align: center;
+    .btn {
+        width: max-content;
+        align-self: center;
+    }
+}
+.home-light-theme {
+    color: var(--light);
+}
+.home-dark-theme {
+    color: var(--dark);
+}
+#rainbow-bitch {
+    font-size: 0;
+    span {
+        font-size: initial;
+        animation: rainbow 8s infinite linear;
+        white-space: nowrap;
+        &:nth-child(1) { animation-delay: 0s; }
+        &:nth-child(2) { animation-delay: 1s; }
+        &:nth-child(3) { animation-delay: 2s; }
+        &:nth-child(4) { animation-delay: 3s; }
+        &:nth-child(5) { animation-delay: 4s; }
+        &:nth-child(6) { animation-delay: 5s; }
+        &:nth-child(7) { animation-delay: 6s; }
+        &:nth-child(8) { animation-delay: 7s; }
+    }
+}
+@keyframes rainbow {
+    0% { color: var(--blue); }
+    12.5% { color: var(--pink); }
+    25% { color: var(--indigo); }
+    37.5% { color: var(--red); }
+    50% { color: var(--green); }
+    62.5% { color: var(--indigo); }
+    75% { color: var(--purple); }
+    87.5% { color: var(--orange); }
+    100% { color: var(--blue); }
+}
+.d-flex {
+    max-width: 480px;
+    align-self: center;
+}

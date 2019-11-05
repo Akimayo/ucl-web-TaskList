@@ -13,3 +13,9 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+//= require jquery
+//= require popper
+//= require bootstrap
+$(document).ready(function() {
+    $(".toast[data-has-content=true]").toast("show");
+});

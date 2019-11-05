@@ -32,6 +32,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 gem 'popper'
 gem 'bootstrap'
+gem 'octicons_helper'
 gem 'devise'
 gem 'simple_form'
 
