@@ -1,23 +1,51 @@
-<div class="container">
-    <h1>Značky</h1>
-    <div class="row">
-        <div class="card col-3">
+<h1>Značky</h1>
+<div class="row">
+    <div class="col-lg-4 col-sm-12">
+        <div class="card task-entity">
             <div class="card-body">
                 <%= link_to  octicon("plus", {class:"btn-link"})+" Nová značka", new_settings_tag_path, class: "card-link" %>
             </div>
         </div>
-    <% @tags.each do |tag| %>
-        <div class="card col-3">
+    </div>
+</div>
+<br />
+<div class="row">
+<% if @tags.count > 0 %>
+<% @tags.each do |tag| %>
+    <div class="col-lg-4 col-sm-12">
+        <div class="card task-entity" data-entity-color="<%= tag.color %>">
+            <%= octicon "tag", class: "back-icon" %>
             <div class="card-body">
                 <div class="card-title d-flex justify-content-between">
-                    <h5><%= octicon "tag" %> <%= tag.title %></h5>
-                    <small class="text-mute"><%= "" %> označených</small>
+                    <h5><%= tag.title %></h5>
+                    <div class="text-muted small"><%= tag.tasks.length %> označených</div>
                 </div>
-                <%= link_to  "Detail", tag, class: "card-link" %>
-                <%= link_to  "Upravit", tag, action: edit, class: "card-link" %>
-                <%= link_to  "Odstranit", tag, method: :delete, class: "card-link" %>
+                <div class="card-text d-none justify-content-around d-md-flex">
+                    <div class="small">#<%= tag.id %></div>
+                    <div class="small"><%= octicon "plus" %> <%= tag.created_at.strftime("%d. %m. %Y") %></div>
+                    <div class="small"><%= octicon "pencil" %> <%= tag.updated_at.strftime("%d. %m. %Y") %></div>
+                    <div class="text-monospace small">
+                        <span style="color: <%= tag.color %>;">&#9608;&#9608;</span>
+                        rgb(<%= "#{tag.color[1..2].to_i(16)},#{tag.color[3..4].to_i(16)},#{tag.color[5..6].to_i(16)}" %>)
+                    </div>
+                </div>
+                <div class="card-rud-links">
+                    <%= link_to  "Detail", settings_tag_path(tag), class: "card-link" %>
+                    <%= link_to  "Upravit", edit_settings_tag_path(tag), class: "card-link" %>
+                    <%= link_to  "Odstranit", settings_tag_path(tag), method: :delete, class: "card-link", data: { confirm: 'Opravdu si přejete značku odstranit?' } %>
+                </div>
             </div>
         </div>
-    <% end %>
     </div>
+<% end %>
+<% else %>
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>Nemáte žádné značky</h4>
+                <%= link_to  "Vytvořit novou značku", new_settings_tag_path %>
+            </div>
+        </div>
+    </div>
+<% end %>
 </div>

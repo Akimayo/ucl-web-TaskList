@@ -1,0 +1,63 @@
+<div class="container">
+    <%= render "back" %>
+    <div class="card task-entity">
+        <div class="card-body">
+            <div class="card-title d-sm-flex justify-content-left align-items-center">
+                <%= simple_form_for(@task) do |t| %>
+                    <label class="task-done-state<%= @task.is_done ? " active" : "" %>">
+                        <%= octicon "check" %>
+                    </label>
+                    <%= t.input_field :is_done,
+                                class: "task-change-state" %>
+                <% end %>
+                <h1><%= @task.title %></h1>
+            </div>
+            <div class="card-text task-info">
+                <h5>
+                    <%= @task.note %>
+                </h5>
+                <div class="d-sm-flex justify-content-around">
+                    <div>
+                        #
+                        <%= @task.id %>
+                    </div>
+                    <div>
+                        <%= octicon "plus" %>
+                        <%= @task.created_at.strftime("%d. %m. %Y") %>
+                    </div>
+                    <div>
+                        <%= octicon "pencil" %>
+                        <%= @task.updated_at.strftime("%d. %m. %Y") %>
+                    </div>
+                    
+                </div>
+                <% if !@task.deadline_at.nil? %>
+                    <p>
+                        <strong>Splnit do: </strong>
+                        <%= octicon "clock" %>
+                        <%= @task.deadline_at.strftime "%d. %m. %Y" %>
+                    </p>
+                <% end %>
+                <% if !@task.category.nil? %>
+                    <p>
+                        <strong>Kategorie: </strong>
+                        <%= link_to  (octicon("saved")+"#{@task.category.title}"), settings_category_path(@task.category), "data-entity-color": @task.category.color, class: "category-link" %>
+                    </p>
+                <% end %>
+                <% if @task.tags.length > 0 %>
+                    <p class="">
+                        <strong>Značky: </strong>
+                    <% @task.tags.each do |g| %>
+                        <span class="tag-link" data-entity-color="<%= g.color %>">
+                            <%= octicon "tag", class: "back-icon" %>
+                            <%= link_to  g.title, settings_tag_path(g) %>
+                        </span>
+                    <% end %>
+                    </p>
+                <% end %>
+                <%= link_to  "Upravit", edit_task_path(@task), class: "card-link" %>
+                <%= link_to  "Odstranit", task_path(@task), method: :delete, class: "card-link", data: { confirm: 'Opravdu si přejete úkol odstranit?' } %>
+            </div>
+        </div>
+    </div>
+</div>

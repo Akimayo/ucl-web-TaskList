@@ -13,31 +13,37 @@
         <div class="column-align">
             <%= link_to  "Přihlásit se", new_user_session_path, class: "btn btn-primary" %>
             <%= link_to  "Ještě nemáte účet?", new_user_registration_path %>
+        </div>
     <% end %>
-    </div>
     <div class="home-dark-theme">
         <p>Aplikace TaskList umožňuje jednoduchou správu úkolů z prostředí webového prohlížeče.</p>
         <p>Klíčové vlastnosti:</p>
-        <div class="row-align">
-            <div class="point-block">
-                <%= octicon 'saved', "aria-label" => "Kategorie" %>
-                Kategorie
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <div class="point-block">
+                    <%= octicon 'saved', "aria-label" => "Kategorie" %>
+                    Kategorie
+                </div>
             </div>
-            <div class="point-block">
-                <%= octicon 'tag', "aria-label" => "Značky" %>
-                Značky
+            <div class="col-12 col-md-4">
+                <div class="point-block">
+                    <%= octicon 'tag', "aria-label" => "Značky" %>
+                    Značky
+                </div>
             </div>
-            <div class="point-block" id="rainbow-bitch">
-                <!-- https://ih1.redbubble.net/image.428495307.9315/poster,840x830,f8f8f8-pad,750x1000,f8f8f8.jpg -->
-                <!-- <%= octicon 'paintcan', "aria-label" => "Barvičky" %>  -->
-                <span>B</span>
-                <span>a</span>
-                <span>r</span>
-                <span>v</span>
-                <span>i</span>
-                <span>č</span>
-                <span>k</span>
-                <span>y</span>
+            <div class="col-12 col-md-4" id="rainbow-bitch">
+                <div class="point-block">
+                    <!-- https://ih1.redbubble.net/image.428495307.9315/poster,840x830,f8f8f8-pad,750x1000,f8f8f8.jpg -->
+                    <!-- <%= octicon 'paintcan', "aria-label" => "Barvičky" %>  -->
+                    <span>B</span>
+                    <span>a</span>
+                    <span>r</span>
+                    <span>v</span>
+                    <span>i</span>
+                    <span>č</span>
+                    <span>k</span>
+                    <span>y</span>
+                </div>
             </div>
         </div>
     </div>

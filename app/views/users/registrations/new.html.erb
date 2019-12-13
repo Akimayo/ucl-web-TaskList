@@ -1,72 +1,77 @@
 <div class="form-inputs container">
-  <h2>Zaregistrovat se</h2>
+  <h1>Zaregistrovat se</h1>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <% if resource.errors.any? { |e| e.length > 0 } %>
-    <%= f.error_notification %>
-  <% end %>
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text">Uživatelské jméno</span>
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <% if resource.errors.any? { |e| e.length > 0 } %>
+      <%= f.error_notification %>
+      <% p resource.errors %>
+    <% end %>
+    <div class="input-text d-lg-none">Uživatelské jméno: <%= octicon "primitive-dot" %></div>
+    <div class="input-group">
+      <div class="input-group-prepend d-none d-lg-block">
+        <span class="input-group-text">Uživatelské jméno <%= octicon "primitive-dot" %></span>
+      </div>
+      <% rndusr = ["less","master","boi","dragon","head"] %>
+      <%= f.input_field :username,
+                  required: true,
+                  autofocus: true,
+                  autocomplete: "username",
+                  placeholder: "např. 'task#{rndusr[rand(0..rndusr.length-1)]}#{rand(10..99).to_s}'",
+                  class: "form-control" %>
     </div>
-    <% rndusr = ["less","master","boi","dragon","head"] %>
-    <%= f.input_field :username,
-                required: true,
-                autofocus: true,
-                autocomplete: "username",
-                placeholder: "např. 'task" + rndusr[rand(0..rndusr.length-1)] + rand(10..99).to_s + "'",
-                class: "form-control" %>
-  </div>
-  <% if resource.errors[:username].length > 0 %>
-    <%= f.error :username, class: "form-text text-muted alert alert-warning" %>
-  <% end %>
-  <br />
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text">E-mail</span>
+    <% if resource.errors[:username].length > 0 %>
+      <%= f.error :username, class: "form-text text-muted alert alert-warning" %>
+    <% end %>
+    <br />
+    <div class="input-text d-lg-none">E-mail: <%= octicon "primitive-dot" %></div>
+    <div class="input-group">
+      <div class="input-group-prepend d-none d-lg-block">
+        <span class="input-group-text">E-mail <%= octicon "primitive-dot" %></span>
+      </div>
+      <%= f.input_field :email,
+                  required: true,
+                  autocomplete: "email",
+                  placeholder: "např. 'ferda@example.com'",
+                  class: "form-control" %>
     </div>
-    <%= f.input_field :email,
-                required: true,
-                autocomplete: "email",
-                placeholder: "např. 'ferda@example.com'",
-                class: "form-control" %>
-  </div>
-  <% if resource.errors[:email].length > 0 %>
-    <%= f.error :email, class: "form-text text-muted alert alert-warning" %>
-  <% end %>
-  <br />
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text">Heslo</span>
+    <% if resource.errors[:email].length > 0 %>
+      <%= f.error :email, class: "form-text text-muted alert alert-warning" %>
+    <% end %>
+    <br />
+    <div class="input-text d-lg-none">Heslo: <%= octicon "primitive-dot" %></div>
+    <div class="input-group">
+      <div class="input-group-prepend d-none d-lg-block">
+        <span class="input-group-text">Heslo <%= octicon "primitive-dot" %></span>
+      </div>
+      <%= f.input_field :password,
+                  required: true,
+                  autocomplete: "new-password",
+                  placeholder: "******",
+                  class: "form-control" %>
     </div>
-    <%= f.input_field :password,
-                required: true,
-                autocomplete: "new-password",
-                placeholder: "******",
-                class: "form-control" %>
-  </div>
-  <%= f.hint "Heslo musí obsahovat alespoň #{@minimum_password_length} znaků" if @minimum_password_length %>
-  <% if resource.errors[:password].length > 0 %>
-    <%= f.error :password, class: "form-text text-muted alert alert-warning" %>
-  <% end %>
-  <br />
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text">Heslo znovu</span>
+    <%= f.hint "Heslo musí obsahovat alespoň #{@minimum_password_length} znaků" if @minimum_password_length %>
+    <% if resource.errors[:password].length > 0 %>
+      <%= f.error :password, class: "form-text text-muted alert alert-warning" %>
+    <% end %>
+    <br />
+    <div class="input-text d-lg-none">Heslo znovu: <%= octicon "primitive-dot" %></div>
+    <div class="input-group">
+      <div class="input-group-prepend d-none d-lg-block">
+        <span class="input-group-text">Heslo znovu <%= octicon "primitive-dot" %></span>
+      </div>
+      <%= f.input_field :password_confirmation,
+                  required: true,
+                  autocomplete: "new-password",
+                  placeholder: "******",
+                  class: "form-control" %>
     </div>
-    <%= f.input_field :password_confirmation,
-                required: true,
-                autocomplete: "new-password",
-                placeholder: "******",
-                class: "form-control" %>
-  </div>
-  <% if resource.errors[:password].length > 0 %>
-    <%= f.error :password, class: "form-text text-muted alert alert-warning" %>
-  <% end %>
-  <br />
-  <div class="form-actions d-flex justify-content-between">
-    <%= render "users/shared/links" %>
-    <%= f.button :submit, "Zaregistrovat se", class: "btn-primary" %>
-  </div>
+    <% if resource.errors[:password].length > 0 %>
+      <%= f.error :password, class: "form-text text-muted alert alert-warning" %>
+    <% end %>
+    <br />
+    <div class="form-actions d-sm-flex justify-content-between">
+      <%= f.button :submit, "Zaregistrovat se", class: "btn-primary order-1 order-sm-3" %>
+      <%= render "users/shared/links" %>
+    </div>
   <% end %>
 </div>

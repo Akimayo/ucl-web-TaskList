@@ -1,19 +1,217 @@
-<h1>Tasks</h1>
-
+<h1>Úkoly</h1>
 <div class="list-group">
-    <%= link_to octicon("plus", {class: "btn-link"})+' Přidat nový úkol', new_task_path, class: "list-group-item" %>
-</div>
-<% @tasks.each do |task| %>
-    <div class="list-group-item">
-        <div class="d-flex justify-content-between">
-            <h5 class="mb-1"><%= task.title %></h5>
-        </div>
-        <p class="mb-1"><%= task.note.nil? ? "" : task.note %></p>
-        <small>
-            <%= link_to 'Více...', task %>
-            <%= link_to 'Upravit', edit_task_path(task) %>
-            <%= link_to 'Odstranit', task, method: :delete, data: { confirm: 'Are you sure?' } %>
-        </small>
+    <div class="list-group list-group-horizontal">
+        <%= link_to new_task_path, class: "list-group-item list-group-item-action btn-link" do %>
+            <%= octicon "plus" %>
+            Přidat
+            <span class="d-none d-md-inline">nový úkol</span>
+        <% end %>
+        <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" data-toggle="modal" data-target="#sort-modal">
+            <%= octicon "settings" %>
+            <span class="d-none d-lg-inline">
+                Seřadit a seskupit...
+            </span>
+            &zwnj;
+            <% if @list.sorted? %>
+                <span class="badge badge-pill badge-primary">
+                    <%= octicon "chevron-#{@list.order_direction == "asc" ? "up" : "down"}" %>
+                </span>
+            <% end %>
+        </button>
+        <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" data-toggle="modal" data-target="#filter-modal">
+            <%= octicon "search" %>
+            <span class="d-none d-lg-inline">
+                Filtrovat...
+            </span>
+            &zwnj;
+            <% if @list.filter_count > 0 %>
+                <span class="badge badge-pill badge-<%= @list.group_by ? "secondary" : "primary" %>">
+                    <%= @list.filter_count %>
+                </span>
+            <% end %>
+        </button>
     </div>
+<%= simple_form_for(@list, url: tasks_path, method: :get) do |f| %>
+    <div class="modal fade" role="dialog" id="filter-modal">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Filtrovat...</h5>
+                    <button class="close" role="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <%= f.input :search,
+                                as: :string,
+                                autocomplete: false,
+                                label: "Hledat" %>
+                    <div>
+                        <h6>Podle kategorie</h6>
+                        <div class="collection-wrap">
+                            <input type="hidden" id="categories_selected" value="<%= f.object.categories.to_s.dump %>">
+                            <%= f.input :categories,
+                                        as: :check_boxes,
+                                        collection: current_user.categories,
+                                        wrapper: false %>
+                        </div>
+                    </div>
+                    <div>
+                        <h6>Podle značek</h6>
+                        <div class="collection-wrap">
+                            <input type="hidden" id="tags_selected" value="<%= f.object.tags.to_s.dump %>">
+                            <%= f.input :tags,
+                                        as: :check_boxes,
+                                        collection: current_user.tags,
+                                        selected: f.object.tags,
+                                        wrapper: false %>
+                        </div>
+                    </div>
+                    <div>
+                        <h6>Podle stavu</h6>
+                        <div class="collection-wrap">
+                            <input type="hidden" id="is_done_selected" value="<%= f.object.is_done %>">
+                            <%= f.input :is_done,
+                                        as: :check_boxes,
+                                        collection: [["Dokončené", true], ["Otevřené", false]],
+                                        class: "check-single form-check",
+                                        label_method: :first,
+                                        value_method: :second,
+                                        wrapper: false %>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <%= f.submit "Filtrovat",
+                                  class: "btn btn-primary" %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="sort-modal">
+        <div class="modal-dialog modal-dialog-scroll" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Seřadit...</h5>
+                    <button class="close" role="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <%= f.input :order_by,
+                                as: :radio_buttons,
+                                collection: [["Názvu", :title], ["Termínu splnění", :deadline_at]],
+                                label_method: :first,
+                                value_method: :second,
+                                label: "Seřadit podle" %>
+                    <%= f.input :order_direction,
+                                as: :radio_buttons,
+                                collection: [["Vzestupně", "asc"], ["Sestupně", "desc"]],
+                                label_method: :first,
+                                value_method: :second,
+                                label: "",
+                                checked: @list.empty? ? "desc" : @list.order_direction %>
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title">Seskupit...</h5>
+                </div>
+                <div class="modal-body">
+                    <%= f.input :group_by,
+                                as: :boolean,
+                                label: "Seskupit podle kategorií" %>
+                </div>
+                <div class="modal-footer">
+                    <%= f.submit "Seřadit a seskupit",
+                                 class: "btn btn-primary" %>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>
+<% unless @list.group_by %>
+    <%= simple_form_for :delete, url: task_path(-1), html: {method: :delete, id: "multi-delete"} do |t|
+            @mdf = t
+        end %>
+    <% @tasks.each do |task| %>
+        <% task.tags.order!(title: "ASC") %>
+        <%= render partial: "task_entity", locals: { task: task, multi: @mdf } %>
+    <% end %>
+    <% if @tasks.count > 0 %>
+    <button class="btn btn-link" id="multiple-destroy-call" data-toggle="modal" data-target="#multiple-destroy-modal">Odstranit vybrané</button>
+    <div class="modal fade" role="dialog" id="multiple-destroy-modal">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Opravdu si přejete odstranit všechny vybrané úkoly?</h5>
+                    <button class="close" role="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body d-flex justify-content-around">
+                <button class="btn btn-primary" data-dismiss="modal">Zrušit</button>
+                <%= @mdf.submit "Odstranit vybrané",
+                                class: "btn btn-outline-danger",
+                                form: "multi-delete" %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% end %>
+<% else %>
+    <% @tasks[:collection].each do |category| %>
+        <% next unless category.tasks.count > 0 %>
+        <% category.tasks.order!("deadline_at IS NOT NULL").order!(deadline_at: "ASC") %>
+        <div class="list-group-item">
+            <div class="task-info">
+                <h4>
+                    <span>
+                        <%= link_to  (octicon("saved")+"#{category.title}"), settings_category_path(category), "data-entity-color": category.color, class: "category-link" %>
+                    </span>
+                </h4>
+            </div>
+            <div class="list-group">
+                <% category.tasks.each do |task| %>
+                    <% task.tags.order!(title: "ASC") %>
+                    <%= render partial: "task_entity", locals: { task: task, multi: nil } %>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+    <% if @display_ungrouped %>
+    <div class="list-group-item">
+        <div class="task-info">
+            <h4>Nezařazené</h4>
+        </div>
+        <div class="list-group">
+            <% @tasks[:ungrouped].each do |task| %>
+                <% task.tags.order!(title: "ASC") %>
+                <%= render partial: "task_entity", locals: { task: task, multi: nil } %>
+            <% end %>
+        </div>
+    </div>
+    <% end %>
+<% end %>
+<% if @tasks.count <= 0 %>
+    <div class="list-group-item">
+        <h4>
+            <% unless @list.empty? %>
+                Tento filtr nevrátil žádné výsledky
+            <% else %>
+                Nemáte žádné úkoly
+            <% end %>
+        </h4>
+        <div>
+            <%= link_to  "Vytvořit nový úkol", new_task_path %>
+            <% unless @list.empty? %>
+                nebo
+                <%= link_to  "zrušit filtry", tasks_path %>
+            <% end %>
+        </div>
+    </div>
+<% end %>
+<% if @list.group_by %>
+<%= will_paginate @tasks[:collection], renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+<% else %>
+<%= will_paginate @tasks, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 <% end %>
 </div>

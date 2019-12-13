@@ -1,5 +1,5 @@
-<div class="col-3 list-group">
-    <%= link_to  "Účet", account_path, class: "list-group-item list-group-item-action active" %>
-    <%= link_to  "Nastavení", settings_path, class: "list-group-item list-group-item-action" %>
-    <%= link_to  "Změnit e-mail nebo heslo", edit_user_registration_path, class: "list-group-item list-group-item-action" %>
-</div>
+<aside class="list-group">
+    <%= link_to  "Účet", account_path, class: "list-group-item list-group-item-action#{current_page?(account_path) ? " active" : ""}" %>
+    <%= link_to  "Nastavení", settings_path, class: "list-group-item list-group-item-action#{current_page?(settings_path) ? " active" : ""}" %>
+    <%= link_to  "Změnit e-mail nebo heslo", edit_user_registration_path, class: "list-group-item list-group-item-action#{current_page?(edit_user_registration_path) ? " active" : ""}" %>
+</aside>

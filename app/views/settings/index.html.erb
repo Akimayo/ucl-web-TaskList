@@ -1,9 +1,18 @@
-<div class="container card">
-    <div class="card-body">
-        <h1 class="card-title">Nastavení</h1>
-        <div class="btn-group container-fluid" role="group" aria-label="Navigation">
-            <%= link_to  "Kategorie", settings_categories_path, class: "btn btn-outline-dark" %>
-            <%= link_to  "Značky", settings_tags_path, class: "btn btn-outline-dark" %>
+<h1>Nastavení</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-3">
+            <%= render "/account/nav" %>
+        </div>
+        <div class="col-12 col-lg-9">
+            <div class="card">
+                <div class="card-body">
+                    <div class="btn-group container-fluid" role="group" aria-label="Navigation">
+                        <%= link_to  "Kategorie", settings_categories_path, class: "btn btn-outline-dark" %>
+                        <%= link_to  "Značky", settings_tags_path, class: "btn btn-outline-dark" %>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,30 +1,63 @@
 <h1><%= current_user.username %></h1>
 <div class="container">
     <div class="row">
-        <%= render "account/nav" %>
-        <div class="col-9">
-            <%= link_to 'Odhlásit se', destroy_user_session_path, method: :delete %>
-            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#cancel-modal">
-                Odstranit účet
-            </button>
+        <div class="col-12 col-lg-3">
+            <%= render "account/nav" %>
         </div>
-    </div>
-</div>
-<div class="modal fade" role="dialog" id="cancel-modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Odstranit účet</h5>
-                <button class="close" role="button" data-dismiss="modal" aria-label="Zavřít">
-                    <span aria-hidden="true">&times;</span>
+        <div class="col-12 col-lg-9">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-text row">
+                        <strong class="col-12 col-lg-3">E-mail: </strong>
+                        <span class="col-12 col-lg-9">
+                            <%= current_user.email %>
+                            <span class="small">
+                                (<%= link_to  "Změnit", edit_user_registration_path %>)
+                            </span>
+                        </span>
+                        <strong class="col-12 col-lg-3">Uživatelské jméno: </strong>
+                        <span class="col-12 col-lg-9">
+                            <%= current_user.username %>
+                            <span class="small">
+                                (<%= link_to  "Změnit", edit_user_registration_path %>)
+                            </span>
+                        </span>
+                        <strong class="col-12 col-lg-3">Heslo: </strong>
+                        <span class="col-12 col-lg-9">
+                            <span class="kebab-spacing">
+                            <% 3.times do %>
+                                <%= octicon "kebab-horizontal" %>
+                            <% end %>
+                            </span>
+                            <span class="small">
+                                (<%= link_to  "Změnit", edit_user_registration_path %>)
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <%= link_to 'Odhlásit se', destroy_user_session_path, method: :delete, class: "btn btn-primary" %>
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#cancel-modal">
+                    Odstranit účet
                 </button>
             </div>
-            <div class="modal-body">
-                Odstranění účtu nenávratně odstraní všechny úkoly, značky a kategorie a znemožní přístup k tomuto účtu. Opravdu si přejete účet odstranit?
-            </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <button class="btn btn-primary" type="button" data-dismiss="modal">Ne, neodstraňovat</button>
-                <%= link_to  "Ano, odstranit účet", user_registration_path, class: "btn btn-secondary",  method: :delete %>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="cancel-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Odstranit účet</h5>
+                    <button class="close" role="button" data-dismiss="modal" aria-label="Zavřít">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Odstranění účtu nenávratně odstraní všechny úkoly, značky a kategorie a znemožní přístup k tomuto účtu. Opravdu si přejete účet odstranit?
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">Ne, neodstraňovat</button>
+                    <%= link_to  "Ano, odstranit účet", user_registration_path, class: "btn btn-secondary",  method: :delete %>
+                </div>
             </div>
         </div>
     </div>

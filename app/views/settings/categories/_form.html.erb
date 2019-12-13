@@ -1,0 +1,30 @@
+<%= simple_form_for(@category, url: @save_path) do |t| %>
+        <% if @category.errors.any? { |e| e.length > 0 } %>
+            <%= t.error_notification %>
+            <% p @cateogory.errors %>
+        <% end %>
+        <div class="input-text d-lg-none">Název kategorie: <%= octicon "primitive-dot" %></div>
+        <div class="input-group">
+            <div class="input-group-prepend d-none d-lg-flex">
+                <span class="input-group-text">Název kategorie <%= octicon "primitive-dot" %></span>
+            </div>
+            <%= t.input_field :title,
+                        required: true,
+                        autofocus: true,
+                        placeholder: "např. 'Práce'",
+                        class: "form-control" %>
+        </div>
+        <br />
+        <div class="input-text d-lg-none">Barva: <%= octicon "primitive-dot" %></div>
+        <div class="input-group">
+            <div class="input-group-prepend d-none d-lg-flex">
+                <span class="input-group-text">Barva <%= octicon "primitive-dot" %></span>
+            </div>
+            <%= t.input_field :color,
+                        as: :color,
+                        required: true,
+                        class: "form-control" %>
+        </div>
+        <br />
+        <%= t.button :submit, "Uložit", class: "btn btn-primary" %>
+<% end %>

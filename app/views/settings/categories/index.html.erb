@@ -1,0 +1,51 @@
+<h1>Kategorie</h1>
+<div class="row">
+    <div class="col-lg-6 col-sm-12">
+        <div class="card task-entity">
+            <div class="card-body">
+                <%= link_to  octicon("plus", {class:"btn-link"})+" Nová kategorie", new_settings_category_path, class: "card-link" %>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+<% if @categories.count > 0 %>
+<% @categories.each do |cat| %>
+    <div class="col-lg-6 col-sm-12">
+        <div class="card task-entity" data-entity-color="<%= cat.color %>">
+            <%= octicon "saved", class: "back-icon" %>
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between">
+                    <h5><%= cat.title %></h5>
+                    <div class="text-muted small"><%= cat.tasks.length %> úkolů</div>
+                </div>
+                <div class="card-text d-none justify-content-around d-md-flex">
+                    <div class="small">#<%= cat.id %></div>
+                    <div class="small"><%= octicon "plus" %> <%= cat.created_at.strftime("%d. %m. %Y") %></div>
+                    <div class="small"><%= octicon "pencil" %> <%= cat.updated_at.strftime("%d. %m. %Y") %></div>
+                    <div class="text-monospace small">
+                        <span style="color: <%= cat.color %>;">&#9608;&#9608;</span>
+                        rgb(<%= "#{cat.color[1..2].to_i(16)},#{cat.color[3..4].to_i(16)},#{cat.color[5..6].to_i(16)}" %>)
+                    </div>
+                </div>
+                <div class="card-rud-links">
+                    <%= link_to  "Detail", settings_category_path(cat), class: "card-link" %>
+                    <%= link_to  "Upravit", edit_settings_category_path(cat), class: "card-link" %>
+                    <%= link_to  "Odstranit", settings_category_path(cat), method: :delete, class: "card-link", data: { confirm: 'Opravdu si přejete kategorii odstranit?' } %>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>
+<% else %>
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>Nemáte žádné kategorie</h4>
+                <%= link_to  "Vytvořit novou kategorii", new_settings_category_path %>
+            </div>
+        </div>
+    </div>
+<% end %>
+</div>

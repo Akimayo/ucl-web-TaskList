@@ -1,16 +1,16 @@
-<div class="nav-item">
+<li class="nav-item">
     <% p tasks_path %>
     <%= link_to "Moje úkoly", tasks_path, class: "nav-link" + (current_page?(tasks_path) ? " active" : "") %>
-</div>
-<div class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+</li>
+<li class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle<%= current_page?(settings_path) || current_page?(settings_categories_path) || current_page?(settings_tags_path) ? " active" : "" %>" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Nastavení
     </a>
     <div class="dropdown-menu" id="navbarDropdown" aria-labelledby="navbarDropdown">
         <%= link_to  "Kategorie", settings_categories_path, class: "dropdown-item" + (current_page?(settings_categories_path) ? " active" : "") %>
         <%= link_to  "Značky", settings_tags_path, class: "dropdown-item" + (current_page?(settings_tags_path) ? " active" : "") %>
     </div>
-</div>
-<div class="nav-item">
+</li>
+<li class="nav-item">
     <%= link_to "Můj účet", account_path, class: "nav-link" + (current_page?(account_path) ? " active" : "") %>
-</div>
+</li>

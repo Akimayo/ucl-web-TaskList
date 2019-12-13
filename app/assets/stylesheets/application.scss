@@ -22,22 +22,18 @@
     --primary: #FF006E;
     --secondary: #FF7700;
 }
-main {
-    margin: auto -15px;
-    padding: 8vh 0;
-    background: linear-gradient(to bottom, var(--dark), transparent);
+footer {
+    margin-bottom: -16px;
 }
-.form-inputs {
-    background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 0.3rem;
-    box-shadow: 0 0 4px #777;
-    padding: 48px 32px;
-    max-width: 480px;
-}
-.toast {
-    position: fixed;
-    top: 64px;
-    right: 8px;
-    width: 300px;
+.collection-wrap {
+    display: flex;
+    flex-flow: row wrap;
+    height: auto;
+    .form-check {
+        padding-right: 8px;
+        flex-grow: 1;
+    }
+    legend {
+        display: none;
+    }
 }

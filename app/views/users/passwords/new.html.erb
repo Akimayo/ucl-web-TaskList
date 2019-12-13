@@ -1,18 +1,29 @@
-<h2>Forgot your password?</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+<div class="form-inputs container">
+  <h1>Zapomenuté heslo</h1>
+  <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <% if resource.errors.any? { |e| e.length > 0 } %>
+      <%= f.error_notification %>
+      <% p resource.errors %>
+    <% end %>
+    <div class="input-text d-lg-none">E-mail: <%= octicon "primitive-dot" %></div>
+    <div class="input-group">
+      <div class="input-group-prepend d-none d-lg-block">
+        <span class="input-group-text">E-mail <%= octicon "primitive-dot" %></span>
+      </div>
+      <%= f.input_field :email,
+                  required: true,
+                  autofocus: true,
+                  input_html: { autocomplete: "email" },
+                  placeholder: "např. 'ferda@example.com'",
+                  class: "form-control" %>
+    </div>
+    <% if resource.errors[:email].length > 0 %>
+      <%= f.error :email, class: "form-text text-muted alert alert-warning" %>
+    <% end %>
+    <br />
+    <div class="form-actions d-sm-flex justify-content-between">
+        <%= f.button :submit, "Zaregistrovat se", class: "btn-primary order-1 order-sm-3" %>
+        <%= render "users/shared/links" %>
+      </div>
+  <% end %>
+</div>

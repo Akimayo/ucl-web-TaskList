@@ -35,6 +35,9 @@ gem 'bootstrap'
 gem 'octicons_helper'
 gem 'devise'
 gem 'simple_form'
+gem 'breadcrumbs_on_rails'
+gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate-bootstrap4','~> 0.2.2'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

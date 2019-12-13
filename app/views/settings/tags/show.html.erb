@@ -1,0 +1,45 @@
+<div class="container">
+    <%= render "back" %>
+    <div class="card task-entity" data-entity-color="<%= @tag.color %>">
+        <%= octicon "tag", class: "back-icon" %>
+        <div class="card-body">
+            <div class="card-title">
+                <h1><%= @tag.title %></h1>
+            </div>
+            <p class="card-text">
+            <div class="d-sm-flex justify-content-around">
+                    <div>
+                        #
+                        <%= @tag.id %>
+                    </div>
+                    <div>
+                        <%= octicon "plus" %>
+                        <%= @tag.created_at.strftime("%d. %m. %Y") %>
+                    </div>
+                    <div>
+                        <%= octicon "pencil" %>
+                        <%= @tag.updated_at.strftime("%d. %m. %Y") %>
+                    </div>
+                    
+                </div>
+        <% if @tag.tasks.length <= 0 %>
+            Tato značka zatím nebyla přiřazena k žádnému úkolu
+        <% else %>
+            Přiřazeno k <%= @tag.tasks.length %> úkolům
+        <% end %>
+            </p>
+            <%= link_to  "Upravit", edit_settings_tag_path(@tag), class: "card-link" %>
+            <%= link_to  "Odstranit", settings_tag_path(@tag), method: :delete, class: "card-link", data: { confirm: 'Opravdu si přejete značku odstranit?' } %>
+        </div>
+    <% if @tag.tasks.length > 0 %>
+        <ul class="list-group list-group-flush">
+        <% @tag.tasks.each do |t| %>
+            <li class="list-group-item">
+                <div><%= t.title %></div>
+                <div><%= link_to  "Zobrazit detail úkolu", task_path(t), class: "card-link" %><div>
+            </li>
+        <% end %>
+        </ul>
+    <% end %>
+    </div>
+</div>

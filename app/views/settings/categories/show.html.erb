@@ -1,0 +1,54 @@
+<div class="container">
+    <%= render "back" %>
+    <div class="card task-entity" data-entity-color="<%= @category.color %>">
+        <%= octicon "saved", class: "back-icon" %>
+        <div class="card-body">
+            <div class="card-title d-flex justify-content-between">
+                <h1><%= @category.title %></h1>
+                <div>
+                    <div class="small">#<%= @category.id %></div>
+                    <div class="small"><%= octicon "plus" %> <%= @category.created_at.strftime("%d. %m. %Y") %></div>
+                    <div class="small"><%= octicon "pencil" %> <%= @category.updated_at.strftime("%d. %m. %Y") %></div>
+                    <div class="text-monospace small">
+                        <span style="color: <%= @category.color %>;">&#9608;&#9608;</span>
+                        rgb(<%= "#{@category.color[1..2].to_i(16)},#{@category.color[3..4].to_i(16)},#{@category.color[5..6].to_i(16)}" %>)
+                    </div>
+                </div>
+            </div>
+            <p class="card-text">
+            <div class="d-sm-flex justify-content-around">
+                    <div>
+                        #
+                        <%= @category.id %>
+                    </div>
+                    <div>
+                        <%= octicon "plus" %>
+                        <%= @category.created_at.strftime("%d. %m. %Y") %>
+                    </div>
+                    <div>
+                        <%= octicon "pencil" %>
+                        <%= @category.updated_at.strftime("%d. %m. %Y") %>
+                    </div>
+                    
+                </div>
+        <% if @category.tasks.length <= 0 %>
+            Do této kategorie nebyly zatím zařazeny žádné úkoly
+        <% else %>
+            Přiřazeno <%= @category.tasks.length %> úkolů
+        <% end %>
+            </p>
+            <%= link_to  "Upravit", edit_settings_category_path(@category), class: "card-link" %>
+            <%= link_to  "Odstranit", settings_category_path(@category), method: :delete, class: "card-link", data: { confirm: 'Opravdu si přejete kategorii odstranit?' } %>
+        </div>
+    <% if @category.tasks.length > 0 %>
+        <ul class="list-group list-group-flush">
+        <% @category.tasks.each do |t| %>
+            <li class="list-group-item">
+                <div><%= t.title %></div>
+                <div><%= link_to  "Zobrazit detail úkolu", task_path(t), class: "card-link" %></div>
+            </li>
+        <% end %>
+        </ul>
+    <% end %>
+    </div>
+</div>

@@ -12,10 +12,21 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
 //= require jquery
 //= require popper
 //= require bootstrap
+//= require_tree .
 $(document).ready(function() {
+    // Show server notifications in toast
     $(".toast[data-has-content=true]").toast("show");
+});
+$(document).on("turbolinks:load", function() {
+    $(".task-entity").each(function() {
+        // SVGs cannot be colorified using style
+        let color = $(this).data("entity-color");
+        $(this).find("svg.back-icon path").css({ fill: color });
+    });
+    $("option").each(function() {
+        $(this).text($(this).text().replace(String.fromCharCode(7), ""))
+    });
 });

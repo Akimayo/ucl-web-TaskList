@@ -1,0 +1,64 @@
+<div class="list-group-item">
+    <div class="d-flex justify-content-left">
+        <%= simple_form_for(task) do |t| %>
+            <label class="task-done-state<%= task.is_done ? " active" : "" %>">
+                <%= octicon "check" %>
+            </label>
+            <%= t.input_field :is_done,
+                        class: "task-change-state",
+                        id: "task_is_done_#{t.object.id}" %>
+            <input type="hidden" name="redirect_to_index" value="true" />
+        <% end %>
+        <h3><%= task.title.gsub(7.chr, "") %></h3>
+    </div>
+    <p class="task-info">
+    <% if !task.deadline_at.nil? %>
+        <span>
+            <%= octicon "clock" %>
+            <%= task.deadline_at.strftime "%d. %m. %Y" %>
+        </span>
+    <% end %>
+    <% if !task.category.nil? && task.category.id > 0 %>
+        <span>
+            <%= link_to  (octicon("saved")+"#{task.category.title}"), settings_category_path(task.category), "data-entity-color": task.category.color, class: "category-link" %>
+        </span>
+    <% end %>
+    <% if task.tags.length > 0 %>
+        <span>
+        <% if task.tags.length > 4 then tag_render = task.tags.to_ary.slice(0,4) else tag_render = task.tags end %>
+        <% tag_render.each do |g| %>
+            <span class="tag-link" data-entity-color="<%= g.color %>">
+                <%= octicon "tag", class: "back-icon" %>
+                <%= link_to  g.title, settings_tag_path(g) %>
+            </span>
+        <% end %>
+        <% if task.tags.length > 4 %>
+            <span class="tag-link">
+                <%= "+#{task.tags.length - 4}" %>
+            </span>
+        <% end %>
+        </span>
+    <% end %>
+    <% if !task.note.nil? && task.note != "" %>
+        <span class="text-muted">
+            <%= octicon "comment" %>
+            <% if task.note.lines.length > 1 %>
+                <%= "#{task.note.lines[0][0..24]}..." %>
+            <% else %>
+                <%= task.note.lines[0].length > 24 ? "#{task.note.lines[0][0..24]}..." : task.note.lines[0] %>
+            <% end %>
+        </span>
+    <% end %>
+    </p>
+    <div>
+        <% unless multi.nil? %>
+            <%= multi.input_field task.id,
+                            as: :boolean,
+                            form: "multi-delete",
+                            class: "mdi" %>
+        <% end %>
+        <%= link_to 'Více...', task %>
+        <%= link_to 'Upravit', edit_task_path(task) %>
+        <%= link_to 'Odstranit', task, method: :delete, data: { confirm: 'Opravdu si přejete úkol odstranit?' } %>
+    </div>
+</div>

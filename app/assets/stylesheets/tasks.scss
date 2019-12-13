@@ -1,3 +1,68 @@
 // Place all the styles related to the Tasks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.task-info {
+    .category-link {
+        color: black;
+        &:hover {
+            color: black;
+        }
+        .octicon {
+            height: 24px;
+            width: 24px;
+        }
+    }
+    .tag-link {
+        position: relative;
+        line-height: 24px;
+        padding: 6px 4px 4px 12px;
+        a, a:hover {
+            color: black;
+        }
+    }
+    &>span:not(:last-child)::after {
+        content: ' | '
+    }
+}
+
+.edit_task {
+    .task-done-state {
+        border: 2px solid var(--dark);
+        border-radius: .3rem;
+        display: block;
+        width: 1.75rem;
+        height: 1.75rem;
+        margin-right: 12px;
+        transition-duration: .15s;
+        cursor: pointer;
+        .octicon {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            path {
+                fill: var(--light);
+            }
+        }
+        &.active {
+            background-color: var(--dark);
+            .octicon {
+                opacity: 1;
+            }
+        }
+    }
+    .task-change-state {
+        display: none;
+    }
+}
+
+.list-group-horizontal {
+    :first-child {
+        border-bottom-left-radius: 0 !important;
+    }
+    :last-child {
+        border-bottom-right-radius: 0 !important;
+    }
+    a {
+        flex-basis: 300%;
+    }
+}

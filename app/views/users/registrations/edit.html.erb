@@ -1,35 +1,72 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
-
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-    <% end %>
-
-    <%= f.input :password,
-                hint: "leave it blank if you don't want to change it",
+<h1>Změnit e-mail nebo heslo</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-lg-3">
+      <%= render "/account/nav" %>
+    </div>
+    <div class="col-12 col-lg-9">
+      <div class="card">
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <div class="card-body">
+          <%= f.error_notification %>
+          <div class="input-text d-block d-lg-none">E-mail:</div>
+          <div class="input-group">
+            <div class="input-group-prepend d-none d-lg-block">
+              <span class="input-group-text">E-mail</span>
+            </div>
+            <%= f.input_field :email,
+                        required: true,
+                        autofocus: true,
+                        class: "form-control" %>
+          </div>
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+          <% else %>
+            <br />
+          <% end %>
+          <div class="input-text d-block d-lg-none">Uživatelské jméno:</div>
+          <div class="input-group">
+            <div class="input-group-prepend d-none d-lg-block">
+              <span class="input-group-text">Uživatelské jméno</span>
+            </div>
+            <%= f.input_field :username,
+                        required: false,
+                        class: "form-control" %>
+          </div>
+          <br />
+          <div class="input-text d-block d-lg-none">Změnit heslo:</div>
+          <div class="input-group">
+            <div class="input-group-prepend d-none d-lg-block">
+              <span class="input-group-text">Změnit heslo</span>
+            </div>
+            <%= f.input_field :password,
+                        required: false,
+                        class: "form-control" %>
+          </div>
+          <div class="input-text d-block d-lg-none">Heslo znovu:</div>
+          <div class="input-group">
+            <div class="input-group-prepend d-none d-lg-block">
+              <span class="input-group-text">Heslo znovu</span>
+            </div>
+            <%= f.input_field :password_confirmation,
                 required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :current_password,
-                hint: "we need your current password to confirm your changes",
+                class: "form-control" %>
+          </div>
+          <br />
+          <div class="input-text d-block d-lg-none">Potvrdit heslem: <%= octicon "primitive-dot" %></div>
+          <div class="input-group">
+            <div class="input-group-prepend d-none d-lg-block">
+              <span class="input-group-text">Potvrdit heslem <%= octicon "primitive-dot" %></span>
+            </div>
+            <%= f.input_field :current_password,
                 required: true,
-                input_html: { autocomplete: "current-password" } %>
+                class: "form-control" %>
+          </div>
+          <br />
+          <%= f.button :submit, "Uložit", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+</div>

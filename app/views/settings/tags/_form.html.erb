@@ -1,13 +1,30 @@
-<% simple_form_for @tag, url: settings_tags_path do |t| %>
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Značka</span>
+<%= simple_form_for(@tag, url: @save_path) do |t| %>
+        <% if @tag.errors.any? { |e| e.length > 0 } %>
+            <%= t.error_notification %>
+            <% p @tag.errors %>
+        <% end %>
+        <div class="input-text d-lg-none">Název značky: <%= octicon "primitive-dot" %></div>
+        <div class="input-group">
+            <div class="input-group-prepend d-none d-lg-flex">
+                <span class="input-group-text">Název značky <%= octicon "primitive-dot" %></span>
+            </div>
+            <%= t.input_field :title,
+                        required: true,
+                        autofocus: true,
+                        placeholedr: "např. 'Práce'",
+                        class: "form-control" %>
         </div>
-        <%= t.input_field :title,
-                    required: true,
-                    autofocus: true,
-                    placeholedr: "např. 'Práce'",
-                    class: "form-control" %>
-    </div>
-    <%= t.button :submit, "Uložit", class: "btn btn-primary" %>
+        <br />
+        <div class="input-text d-lg-none">Barva: <%= octicon "primitive-dot" %></div>
+        <div class="input-group">
+            <div class="input-group-prepend d-none d-lg-flex">
+                <span class="input-group-text">Barva <%= octicon "primitive-dot" %></span>
+            </div>
+            <%= t.input_field :color,
+                        as: :color,
+                        required: true,
+                        class: "form-control" %>
+        </div>
+        <br />
+        <%= t.button :submit, "Uložit", class: "btn btn-primary" %>
 <% end %>

@@ -1,0 +1,67 @@
+<%= simple_form_for(@task) do |t| %>
+    <% if @task.errors.any? { |e| e.length > 0 } %>
+        <%= t.error_notification %>
+        <% p @task.errors %>
+    <% end %>
+    <% rndtask = ["Koupit brambory", "Vyprat kalhoty", "Vyžehlit košili", "Zaplatit internet", "Odeslat semestrální práci", "Zabít draka"] %>
+    <div class="input-text d-lg-none">Název: <%= octicon "primitive-dot" %></div>
+    <div class="input-group">
+        <div class="input-group-prepend d-none d-lg-flex">
+            <span class="input-group-text">Název <%= octicon "primitive-dot" %></span>
+        </div>
+        <%= t.input_field :title,
+                    required: true,
+                    placeholder: "např. '#{rndtask[rand(0..rndtask.length-1)]}'",
+                    class: "form-control" %>
+    </div>
+    <div class="input-text d-lg-none">Poznámka:</div>
+    <div class="input-group">
+        <div class="input-group-prepend d-none d-lg-flex">
+            <span class="input-group-text">Poznámka</span>
+        </div>
+        <%= t.input_field :note,
+                    class: "form-control" %>
+    </div>
+    <div class="input-text d-lg-none">Splnit do:</div>
+    <div class="input-group">
+        <div class="input-group-prepend d-none d-lg-flex">
+            <span class="input-group-text">Splnit do</span>
+        </div>
+        <%= t.input_field :deadline_at,
+                    as: :string,
+                    class: "form-control" %>
+    </div>
+    <div class="input-text d-lg-none">Kategorie:</div>
+    <div class="input-group">
+        <div class="input-group-prepend d-none d-lg-flex">
+            <span class="input-group-text">Kategorie</span>
+        </div>
+        <%= t.association :category,
+                    required: false,
+                    label: false,
+                    wrapper: false,
+                    collection: current_user.categories,
+                    class: "form-control" %>
+    </div>
+    <div class="input-text d-lg-none">Značky:</div>
+    <div class="input-group">
+        <div class="input-group-prepend d-none d-lg-flex">
+            <span class="input-group-text">Značky</span>
+        </div>
+        <div class="form-control collection-wrap">
+            <%= t.association :tags,
+                        collection: current_user.tags,
+                        required: false,
+                        legend: false,
+                        as: :check_boxes,
+                        wrapper: false,
+                        class: "col" %>
+        </div>
+    </div>
+    <%= t.input :is_done,
+                as: :hidden %>
+    <div class="d-sm-flex justify-content-between">
+        <%= link_to  "Zrušit", tasks_path, class: "btn btn-outline-secondary" %>
+        <%= t.submit "Uložit", class: "btn btn-primary" %>
+    </div>
+<% end %>

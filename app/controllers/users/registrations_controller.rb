@@ -2,56 +2,42 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+  before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    add_breadcrumb "Zaregistrovat se"
+    super
+  end
 
   # POST /resource
   def create
+    bell = 7.chr
     super do |reg|
-      # TODO: Add mock tasks/categories/tags for new users
-      c0 = Category.new(title: "Osobní", color: "", user: reg)
-      c0.save
-      c1 = Category.new(title: "Škola", color: "", user: reg)
-      c1.save
-      c2 = Category.new(title: "Práce", color: "", user: reg)
-      c2.save
-      t0 = Task.new(title: "Vítejte v aplikaci TaskList", user: reg)
-      t0.save
-      t1 = Task.new(title: "Naučte se používat kategorie", category: c0, note: "TODO: Category text", user: reg)
-      t1.save
-      t2 = Task.new(title: "Naučte se používat značky", note: "TODO: Tags text", user: reg)
-      t2.save
-      g0 = Tag.new(title: "UCL", color: "", user: reg)
-      g0.save
-      g1 = Tag.new(title: "JSE", color: "", user: reg)
-      g1.save
-      g2 = Tag.new(title: "WEB", color: "", user: reg)
-      g2.save
-      g3 = Tag.new(title: "3DT", color: "", user: reg)
-      g3.save
-      g4 = Tag.new(title: "PR1", color: "", user: reg)
-      g4.save
-      g5 = Tag.new(title: "PES", color: "", user: reg)
-      g5.save
-      g6 = Tag.new(title: "Nákupy", color: "", user: reg)
-      g6.save
-      g7 = Tag.new(title: "Wishlist", color: "", user: reg)
-      g7.save
-      p t2
-      p g7
-      a0 = TagAssociation.new(tag: g7, task: t2)
-      a0.save
+      c0 = reg.categories.new({title: "#{bell}Osobní", color: "#FF0000"})
+      c1 = reg.categories.new(title: "#{bell}Škola", color: "#00FF00")
+      reg.categories.new(title: "#{bell}Práce", color: "#0000FF")
+      g1 = reg.tags.new(title: "#{bell}UCL", color: "#F00000")
+      reg.tags.new(title: "#{bell}JSE", color: "#0FFFFF")
+      g2 = reg.tags.new(title: "#{bell}WEB", color: "#00F000")
+      reg.tags.new(title: "#{bell}3DT", color: "#FF0FFF")
+      reg.tags.new(title: "#{bell}PR1", color: "#0000F0")
+      reg.tags.new(title: "#{bell}PES", color: "#FFFF0F")
+      g0 = reg.tags.new(title: "#{bell}Nákupy", color: "#000FFF")
+      reg.tags.new(title: "#{bell}Wishlist", color: "#FFF000")
+      reg.tasks.new(title: "#{bell}Toto je jednoduchý úkol", is_done: false)
+      reg.tasks.new(title: "#{bell}Toto je už dokončený úkol", is_done: true)
+      reg.tasks.new(title: "#{bell}Nakoupit na večeři", is_done: false, category: c0, tags: [g0])
+      reg.tasks.new(title: "#{bell}Udělat semestrální práci z předmětu WEB", is_done: false, category: c1, tags: [g1, g2])
+      reg.save
     end
   end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    add_breadcrumb "Upravit účet"
+    super
+  end
 
   # PUT /resource
   # def update
@@ -59,9 +45,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+    def destroy
+      current_user.tasks.all.each do |c|
+        c.update({tag_ids: []})
+        c.destroy
+      end
+      current_user.tags.all.each do |g|
+        g.destroy
+      end
+      current_user.categories.all.each do |t|
+        t.destroy
+      end
+      super
+    end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign

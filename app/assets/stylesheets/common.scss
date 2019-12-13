@@ -1,3 +1,6 @@
+.container-fluid>h1 {
+    color: var(--light);
+}
 .column-align {
     display: flex;
     flex-flow: column;
@@ -16,4 +19,71 @@
     background-color: var(--light);
     padding: 8px;
     margin: 12px;
+}
+main {
+    margin: auto -15px;
+    padding: 8vh 0;
+    background: linear-gradient(to bottom, var(--dark), transparent);
+}
+.form-inputs {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 0.3rem;
+    box-shadow: 0 0 4px #777;
+    padding: 48px 32px;
+    max-width: 480px;
+}
+.form-inputs, .card {
+    position: relative;
+}
+.card .card-body {
+    z-index: 4;
+}
+svg.octicon.back-icon {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: auto;
+    height: 100%;
+    opacity: 0.3;
+    z-index: 0;
+    &.octicon-saved {
+        top: 16px;
+        left: 0;
+        height: 75%;
+    }
+}
+.toast {
+    position: fixed;
+    top: 64px;
+    right: 8px;
+    width: 300px;
+    z-index: 92;
+}
+.card-rud-links {
+    text-align: right;
+}
+.btn {
+    .octicon {
+        height: 24px;
+        width: auto;
+    }
+    &.btn-outline-light {
+        path {
+            fill: var(--light);
+            transition-duration: .15s;
+        }
+        &:hover path {
+            fill: black;
+        }
+    }
+}
+.badge-pill svg {
+    fill: #fff;
+    height: 12px;
+    width: 7px;
+}
+.text-monospace.small {
+    font-size: 8px;
+    line-height: 19.2px;
 }

@@ -1,6 +1,6 @@
-<div class="nav-item">
+<li class="nav-item">
     <%= link_to "Přihlásit se", new_user_session_path, class: "nav-link" + (current_page?(new_user_session_path) ? " active" : "") %>
-</div>
-<div class="nav-item">
+</li>
+<li class="nav-item">
     <%= link_to "Zaregistrovat se", new_user_registration_path, class: "nav-link" + (current_page?(new_user_registration_path) ? " active" : "") %>
-</div>
+</li>
